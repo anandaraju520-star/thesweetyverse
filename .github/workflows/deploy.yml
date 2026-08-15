@@ -20,6 +20,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./react-app
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -29,18 +33,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      # 2. Install Node.js
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: react-app/package-lock.json
 
       # 3. Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4. Build React Router application
+      # 4. Build application
       - name: Build application
         run: npm run build
 
@@ -48,11 +53,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
-      # 6. Upload static build
+      # 6. Upload build
       - name: Upload build
         uses: actions/upload-pages-artifact@v5
         with:
-          path: ./build/client
+          path: ./react-app/build/client
 
       # 7. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
