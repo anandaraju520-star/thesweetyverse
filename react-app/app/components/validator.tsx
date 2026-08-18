@@ -11,7 +11,7 @@ export function Validator() {
     if (!!!pswd) {
       alert('Please enter valid password.');
     } else {
-      const response = await fetch("https://thesweetyverse-api.anandaraju520.workers.dev/api/validate",
+      const response = await fetch("https://api.thesweetyverse.com/api/validate",
         {
           method: "POST",
           headers: {

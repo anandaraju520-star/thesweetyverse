@@ -12,7 +12,7 @@ export default function ProtectedLayout() {
   async function checkAuthentication() {
     try {
       const response = await fetch(
-        "https://thesweetyverse-api.anandaraju520.workers.dev/api/auth/me",
+        "https://api.thesweetyverse.com/api/auth/me",
         {
           method: "GET",
           credentials: "include",
