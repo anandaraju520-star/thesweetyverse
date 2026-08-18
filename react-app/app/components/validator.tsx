@@ -4,14 +4,28 @@ import { useNavigate } from 'react-router';
 export function Validator() {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = React.useState('');
-  const checkValidation = () => {
+  const checkValidation = async() => {
     // Validation logic here
     let pswd = inputValue.trim();
     let isValid = false;
     if (!!!pswd) {
       alert('Please enter valid password.');
     } else {
-      if(pswd === 'sweety12052002') {
+      const response = await fetch("https://thesweetyverse-api.anandaraju520.workers.dev/api/validate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: pswd,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if(data.success) {
         isValid = true;
         alert('Password is valid.');
       } else {
