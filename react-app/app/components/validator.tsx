@@ -17,6 +17,7 @@ export function Validator() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             password: pswd,
           }),
@@ -25,7 +26,7 @@ export function Validator() {
 
       const data = await response.json();
 
-      if(data.success) {
+      if(response.ok && data.success) {
         isValid = true;
         alert('Password is valid.');
       } else {
