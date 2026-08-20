@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
+import { useEffect } from "react";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Header } from "./components/header";
@@ -46,6 +46,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    const redirect = sessionStorage.getItem("redirect");
+
+    if (redirect) {
+      sessionStorage.removeItem("redirect");
+
+      const url = new URL(redirect);
+
+      window.history.replaceState(
+        null,
+        "",
+        url.pathname + url.search + url.hash
+      );
+    }
+  }, []);
+  
   return <Outlet />;
 }
 
